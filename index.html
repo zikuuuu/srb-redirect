@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Redirect to Steam</title>
+  <script>
+	function isMobileDevice() {
+      return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+    }
+	
+	function isDiscordScraper() {
+	  return (typeof window.navigator.userAgent == ("Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com/)"));
+	}
+	
+    document.addEventListener("DOMContentLoaded", function() {
+      var urlParams = new URLSearchParams(window.location.search); // Get URL query parameters
+      var gameid = urlParams.get('gameid'); // Get the value of the 'gameid' query parameter
+
+	  if (gameid && /^\d+$/.test(gameid)) {
+		  if (isMobileDevice() || isDiscordScraper()) {
+			var redirectLink = "https://store.steampowered.com/app/" + gameid;
+			window.location.href = redirectLink;
+		  }
+		  else{
+			var redirectLink = "steam://install/" + gameid;
+			window.location.href = redirectLink; // Redirect the user to the Steam installation link
+	      }
+	  }
+      else{
+       var redirectLink = "https://store.steampowered.com";
+	   window.location.href = redirectLink;
+      }
+    });
+  </script>
+</head>
+<body>
+  <h4>Redirecting to Steam...</h4>
+</body>
+</html>
